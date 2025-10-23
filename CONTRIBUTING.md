@@ -177,6 +177,23 @@ Fixes https://github.com/eclipse-platform/eclipse.platform.debug/issues/132
   Again this is a recommendation on the issue title part. Instead of issue title, if needed provide a concise description of changes. 
   Please do not forget to add the issue URL to the commit message. This is used to link with GitHub issue.
 
+## Using Github Copilot Agent
+
+Using the [Github Copilot Agent](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent) can boost your productivity and provide interesting insights as it allows to fire up a prompt and refine the results or build up on the analysis results.
+Due to current limitations using this directly against the base repository has some drawbacks:
+
+- Copilot can currently not use a fork, so the branch is created directly on the repository which is against the recommended fork-based workflow.
+- Copilot currently cannot squash  and force push a branch.
+- GitHub does not support filtering of individual notifications, due to the high cadence and the incremental work mode in some cases this can easily flood the inbox of subscribers of the repository.
+- If the task is not properly written or the problem is too complex, it can result in creating something off the track that needs to be discarded and then iterate again which results in more churn.
+
+Because of this we recommend the following workflow:
+
+- Let copilot work on your fork.  For this one should sync the fork which can be done though the [web UI](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
+- Instead of assigning copilot an an issue, simply reference the issue in the prompt, e.g., `Analyze and propose a fix for <link to the original issue>`.
+- If you are happy with the result or would like to further refine it yourself),  just fetch the branch from your fork, squash all commits, remove unnecessary files and force push the result to a new branch, e.g., usually copilot creates `copilot/fix-for-issue-123` so just push it as `fix-for-issue-123` and then open a PR against the repo as usual. This has the advantage that you can even ask copilot to refine some things later and then just merge the results into your local branch by a simple fetch!
+- Usually you want to leave copilot as the author and you as the committer, unless you have significantly rewritten the results, e.g., f it was mostly a research task and you did the actual implementation.
+
 ## Building the project on commandline
 
 Even though most of the time you can work in the IDE it is sometime beneficial to build on the commandline as this is how we also execute the verification builds, also some test might not run at all in the IDE if they require a very specific setup,
